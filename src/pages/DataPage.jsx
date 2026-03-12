@@ -2,26 +2,38 @@ import { useLocation } from "react-router-dom";
 
 function DataPage() {
   const location = useLocation();
-  const data = location.state || [];
+  const data = location.state?.results || [];
+  if (!data || data.length === 0) {
+    return (
+      <div className="container">
+        <div className="empty-state">
+          <h2>No Data Available</h2>
+          <p>Please go back to the home page and fetch some data.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div style={{ padding: "20px" }}>
-      <table border="1" cellPadding="8">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((user) => (
-            <tr key={user.id}>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
+    <div className="container">
+      <div className="table-container">
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Url</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {data.map((pokemon) => (
+              <tr>
+                <td>{pokemon.name}</td>
+                <td>{pokemon.url}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

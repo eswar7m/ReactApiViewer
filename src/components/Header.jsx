@@ -2,16 +2,22 @@ import { useNavigate } from "react-router-dom";
 
 function Header() {
   const navigate = useNavigate();
-  const fetchData = async () => {
-    const res = await fetch("https://jsonplaceholder.typicode.com/users");
+  const fetchData = async (e) => {
+    e.preventDefault();
+    const res = await fetch("https://pokeapi.co/api/v2/pokemon/");
     const data = await res.json();
     navigate("/data", { state: data });
   };
 
   return (
-    <div>
-      <button onClick={fetchData}>Fetch Users</button>
-    </div>
+    <header className="navbar">
+      <div className="nav-left">
+        <span className="logo">API Explorer</span>
+      </div>
+      <div className="nav-right">
+        <a onClick={fetchData}>List Users</a>
+      </div>
+    </header>
   );
 }
 
